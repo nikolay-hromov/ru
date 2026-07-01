@@ -407,7 +407,7 @@
         .trust-slider-container {
             position: relative;
             width: 100%;
-            max-width: 400px; /* ИЗМЕНЕНО: Ограничили ширину для вертикального блока 9:16 на ПК */
+            max-width: 400px;
             margin: 0 auto;
             padding: 15px;
             border-radius: 20px;
@@ -421,7 +421,7 @@
         .trust-slides-wrapper {
             position: relative;
             width: 100%;
-            aspect-ratio: 9 / 16; /* ИЗМЕНЕНО: Пропорции 9 на 16 (вертикальные) */
+            aspect-ratio: 9 / 16;
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
@@ -447,7 +447,7 @@
         .trust-image {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Изображение будет заполнять блок 9:16, обрезая лишнее, если нужно */
+            object-fit: cover;
             display: block;
         }
 
@@ -460,7 +460,7 @@
             -webkit-backdrop-filter: blur(8px);
             border: 1px solid rgba(255, 255, 255, 0.7);
             color: var(--text-main);
-            width: 40px;  /* Чуть уменьшили для вертикального блока */
+            width: 40px; 
             height: 40px;
             border-radius: 50%;
             display: flex; 
@@ -481,7 +481,7 @@
             transform: translateY(-50%) scale(1.05);
         }
 
-        .trust-prev { left: -15px; } /* Сдвинули стрелки ближе к краям или наружу */
+        .trust-prev { left: -15px; }
         .trust-next { right: -15px; }
 
         .trust-dots {
@@ -636,6 +636,8 @@
             flex-direction: column;
             justify-content: space-between;
             height: 100%;
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.05);
         }
 
         .pricing-features {
@@ -649,8 +651,10 @@
         .pricing-features li {
             margin-bottom: 12px;
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             gap: 10px;
+            font-size: 0.95rem;
+            line-height: 1.4;
         }
 
         /* --- GLOWING FUNNEL (HOW WE WORK) --- */
@@ -1097,22 +1101,6 @@
             to {transform: scale(1); opacity: 1;}
         }
 
-        .gallery-close {
-            position: absolute;
-            top: 20px;
-            right: 30px;
-            color: #fff;
-            font-size: 40px;
-            font-weight: bold;
-            cursor: pointer;
-            z-index: 2001;
-            transition: color 0.3s, transform 0.3s;
-        }
-        .gallery-close:hover { 
-            color: var(--accent-gold); 
-            transform: scale(1.1);
-        }
-
         .form-close {
             position: absolute;
             top: 12px;
@@ -1139,28 +1127,113 @@
             color: var(--accent-gold);
         }
 
-        .gallery-prev, .gallery-next {
-            cursor: pointer;
-            position: absolute;
-            top: 50%;
-            width: auto;
-            padding: 16px;
-            margin-top: -50px;
-            color: white;
-            font-weight: bold;
-            font-size: 30px;
-            transition: 0.3s ease;
-            user-select: none;
-            background: rgba(0,0,0,0.3);
-            border-radius: 50%;
-            z-index: 2001;
+        /* --- НОВОЕ ПРЕМИАЛЬНОЕ МОДАЛЬНОЕ ОКНО ДЛЯ КНОПКИ "ПОДРОБНЕЕ" --- */
+        .details-modal {
+            display: none;
+            position: fixed;
+            z-index: 3000;
+            left: 0; top: 0; width: 100%; height: 100%;
+            background: rgba(10, 10, 10, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
         }
 
-        .gallery-prev { left: 20px; }
-        .gallery-next { right: 20px; }
-        .gallery-prev:hover, .gallery-next:hover {
-            background-color: var(--accent-gold);
-            color: white;
+        .details-modal-content {
+            background: var(--bg-color);
+            width: 100%;
+            max-width: 650px;
+            max-height: 85vh;
+            overflow-y: auto;
+            border-radius: 24px;
+            padding: 45px 50px;
+            position: relative;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5), inset 0 0 0 1px rgba(212, 175, 55, 0.3);
+            animation: premiumFadeIn 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        /* Скрываем стандартный скроллбар для красоты */
+        .details-modal-content::-webkit-scrollbar { width: 6px; }
+        .details-modal-content::-webkit-scrollbar-thumb { background: rgba(212, 175, 55, 0.5); border-radius: 10px; }
+
+        @keyframes premiumFadeIn {
+            0% { opacity: 0; transform: scale(0.9) translateY(30px) rotateX(-5deg); perspective: 1000px; }
+            100% { opacity: 1; transform: scale(1) translateY(0) rotateX(0deg); perspective: 1000px; }
+        }
+
+        .details-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px; height: 40px;
+            background: #fff;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 28px; color: var(--text-main);
+            cursor: pointer; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease; 
+            z-index: 10;
+            line-height: 1;
+        }
+        .details-close:hover { 
+            background: var(--accent-gold); 
+            color: #fff; 
+            transform: rotate(90deg); 
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+        }
+
+        /* Внутренние блоки модального окна */
+        .dm-title { color: var(--accent-gold); font-size: 2.2rem; margin-bottom: 8px; line-height: 1.2; text-transform: uppercase; }
+        .dm-subtitle { font-size: 1.15rem; color: var(--text-main); margin-bottom: 30px; font-weight: 400; text-transform: uppercase; letter-spacing: 0.05em; }
+        
+        .dm-frame {
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            border-radius: 16px;
+            padding: 30px 25px;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(212, 175, 55, 0.02));
+            margin-bottom: 35px;
+            box-shadow: inset 0 0 20px rgba(212, 175, 55, 0.05);
+            position: relative;
+        }
+        .dm-frame::before {
+            content: '✦';
+            position: absolute;
+            top: -14px; left: 50%;
+            transform: translateX(-50%);
+            background: var(--bg-color);
+            padding: 0 15px;
+            color: var(--accent-gold);
+            font-size: 1.4rem;
+        }
+        .dm-frame p { color: var(--text-main); font-size: 1.1rem; line-height: 1.6; text-align: center; font-style: italic; font-weight: 300;}
+
+        .dm-text-block { margin-bottom: 30px; }
+        .dm-text-block h4 { color: var(--text-main); font-size: 1.3rem; margin-bottom: 12px; font-weight: 500;}
+        .dm-text-block p { color: var(--text-muted); font-size: 1.05rem; line-height: 1.6; font-weight: 300; margin-bottom: 15px; }
+
+        .dm-list-container { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 40px; }
+        .dm-tag {
+            background: #fff;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: 0.95rem;
+            color: var(--text-main);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+            transition: all 0.3s ease;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+        .dm-tag:hover { 
+            background: var(--accent-gold); 
+            color: #fff; 
+            transform: translateY(-3px); 
+            box-shadow: 0 6px 15px rgba(212, 175, 55, 0.3); 
+            border-color: var(--accent-gold);
         }
 
         /* --- RESPONSIVE FIXES --- */
@@ -1197,7 +1270,6 @@
             
             .trust-card { padding: 25px 15px; }
             
-            /* Сброс max-width для мобильных, чтобы было на всю ширину контейнера */
             .trust-slider-container { max-width: 100%; padding: 8px; }
             .trust-arrow { width: 35px; height: 35px; font-size: 1rem; }
             .trust-prev { left: 10px; }
@@ -1226,6 +1298,16 @@
             .funnel-dot { left: 20px !important; right: auto !important; }
             .funnel-box { max-width: 100%; }
             .funnel-number, .funnel-step:nth-child(even) .funnel-number { right: 10px; left: auto; }
+
+            /* Адаптив для нового модального окна */
+            .details-modal-content { padding: 35px 20px; border-radius: 20px; max-height: 90vh;}
+            .dm-title { font-size: 1.8rem; }
+            .dm-subtitle { font-size: 1rem; margin-bottom: 20px;}
+            .details-close { top: 15px; right: 15px; width: 35px; height: 35px; font-size: 22px; }
+            .dm-frame { padding: 25px 15px; margin-bottom: 25px;}
+            .dm-frame p { font-size: 1rem; }
+            .dm-text-block p { font-size: 0.95rem; }
+            .dm-tag { padding: 8px 15px; font-size: 0.85rem; }
         }
     </style>
 </head>
@@ -1248,22 +1330,19 @@
 
     <section id="about" class="container">
         <div class="mission-main-card neumorphic">
-            <!-- Обернули слова в неразрывные пробелы &nbsp; для правильного переноса на мобильном -->
             <h1 class="golden-glow-text">Николай&nbsp;Хромов <br> Архитектор&nbsp;Духа</h1>
             
             <div class="glass-inset-container">
                 <p class="mission-lead">Помогаю людям освободиться от алкогольной, наркотической и других зависимостей через глубинную работу с подсознанием.</p>
                 <div class="mission-divider"></div>
                 <p class="vitality-text">
-                    Почему люди не могут бросить?
-Никто не начинает употреблять просто так.
-Алкоголь, наркотики, азартные игры или другие зависимости — это способ на время убежать от внутренней боли, тревоги, чувства одиночества, вины, страха или эмоционального напряжения.
-Поэтому борьба с зависимостью только силой воли чаще всего заканчивается новым срывом. Пока остается причина, психика снова ищет способ заглушить боль. <br><br>
-                    Что мы делаем?
-Мы не боремся с зависимостью.
-Мы находим ту внутреннюю причину, из-за которой психике когда-то понадобилось убегать от реальности.
-Во время глубинной работы с подсознанием вы обнаруживаете источник своей боли, освобождаетесь от внутренних ограничений и возвращаете себе утраченную внутреннюю опору.
-Когда исчезает причина, исчезает и необходимость постоянно убегать от жизни.
+                    Почему люди не могут бросить? Никто не начинает употреблять просто так.
+                    Алкоголь, наркотики, азартные игры или другие зависимости — это способ на время убежать от внутренней боли, тревоги, чувства одиночества, вины, страха или эмоционального напряжения.
+                    Поэтому борьба с зависимостью только силой воли чаще всего заканчивается новым срывом. Пока остается причина, психика снова ищет способ заглушить боль. <br><br>
+                    Что мы делаем? Мы не боремся с зависимостью.
+                    Мы находим ту внутреннюю причину, из-за которой психике когда-то понадобилось убегать от реальности.
+                    Во время глубинной работы с подсознанием вы обнаруживаете источник своей боли, освобождаетесь от внутренних ограничений и возвращаете себе утраченную внутреннюю опору.
+                    Когда исчезает причина, исчезает и необходимость постоянно убегать от жизни.
                 </p>
             </div>
         </div>
@@ -1291,6 +1370,7 @@
                     <p class="hero-bio-lead">
                         <strong>На протяжении многих лет я изучаю работу подсознания, механизмы формирования зависимостей и способы глубинной внутренней трансформации. За это время я помог сотням людей изменить свою жизнь, а мой YouTube-канал поддержал тысячи людей на пути к трезвости.</strong><br>
                         Для меня это не просто профессия. Это дело моей жизни. Я знаю, насколько тяжело выбраться из зависимости, поэтому работаю не с осуждением и запретами, а с пониманием, уважением и поиском истинной причины проблемы.
+                    </p>
                     
                     <div class="mission-highlight-box">
                         <p class="hero-highlight-text">
@@ -1482,100 +1562,71 @@
         <div class="pricing-grid">
             
             <!-- Пакет 1 -->
-            <div class="pricing-card neumorphic">
+            <div class="pricing-card neumorphic" style="border: 1px solid rgba(212, 175, 55, 0.4); box-shadow: 0 10px 25px rgba(212, 175, 55, 0.05);">
                 <div>
-                    <h3 style="font-size: 1.6rem; color: var(--text-main);">Освобождение от зависимости</h3>
-                    <p style="color: var(--accent-gold); font-weight: 500; margin-top: 5px;">1 глубокая гипносессия + 1 корректирующая сессия</p>
+                    <h3 style="font-size: 1.6rem; color: var(--accent-gold);">Освобождение от зависимости</h3>
+                    <p style="color: var(--text-main); font-weight: 500; margin-top: 5px;">2 глубокие гипносессии</p>
                     <p style="color: var(--text-muted); font-weight: 300; margin-top: 10px; font-size: 0.95rem;">Программа для тех, кто хочет выйти из разрушительного сценария и вернуть контроль над своей жизнью.</p>
                     <div class="mission-divider" style="width: 60px; margin: 15px auto;"></div>
                 </div>
                 <ul class="pricing-features">
                     <li><span class="check-icon">✓</span> Находим психологические причины зависимости.</li>
-                    <li><span class="check-icon">✓</span> Меняем отношение к объекту зависимости на уровне подсознания.</li>
-                    <li><span class="check-icon">✓</span> Снижаем или убираем тягу.</li>
-                    <li><span class="check-icon">✓</span> Освобождаем внутренние ресурсы для развития и созидания.</li>
-                    <li><span class="check-icon">✓</span> Формируем новый вектор жизни без саморазрушения.</li>
+                    <li><span class="check-icon">✓</span> Меняем отношение к объекту на уровне подсознания.</li>
+                    <li><span class="check-icon">✓</span> Снижаем или полностью убираем тягу.</li>
+                    <li><span class="check-icon">✓</span> Освобождаем внутренние ресурсы для созидания.</li>
+                    <li><span class="check-icon">✓</span> Формируем вектор жизни без саморазрушения.</li>
                 </ul>
-                <div style="background: rgba(212, 175, 55, 0.05); padding: 15px; border-radius: 12px; margin-bottom: 20px; text-align: left; border: 1px solid rgba(212, 175, 55, 0.2);">
+                <div style="background: rgba(212, 175, 55, 0.05); padding: 15px; border-radius: 12px; margin-bottom: 20px; text-align: left; border: 1px solid rgba(212, 175, 55, 0.2); margin-top: auto;">
                     <p style="font-weight: 500; color: var(--accent-gold); margin-bottom: 5px; font-size: 1rem;">Результат:</p>
-                    <p style="font-size: 0.95rem; color: var(--text-main); font-weight: 300;">Снижение тяги, изменение мышления и переход в более здоровый и продуктивный образ жизни.</p>
+                    <p style="font-size: 0.95rem; color: var(--text-main); font-weight: 300;">Снижение тяги, изменение мышления и переход в продуктивный образ жизни.</p>
                 </div>
-                <button class="btn-main" onclick="openFormModal()">Выбрать формат</button>
+                <button class="btn-main" style="background: var(--accent-gold); color:#fff;" onclick="openDetailsModal('package1')">Подробнее</button>
             </div>
 
             <!-- Пакет 2 -->
-            <div class="pricing-card neumorphic" style="border: 1px solid rgba(212, 175, 55, 0.4); box-shadow: 0 10px 25px rgba(212, 175, 55, 0.1);">
+            <div class="pricing-card neumorphic" style="border: 1px solid rgba(212, 175, 55, 0.4); box-shadow: 0 10px 25px rgba(212, 175, 55, 0.05);">
                 <div>
                     <h3 style="font-size: 1.6rem; color: var(--accent-gold);">Тотальная трансформация</h3>
-                    <p style="color: var(--text-main); font-weight: 500; margin-top: 5px;">Месячный курс из 5 сессий (1 в неделю)</p>
+                    <p style="color: var(--text-main); font-weight: 500; margin-top: 5px;">Месячный курс (5 сессий)</p>
                     <p style="color: var(--text-muted); font-weight: 300; margin-top: 10px; font-size: 0.95rem;">Комплексная работа с причинами проблем, а не только с их последствиями.</p>
                     <div class="mission-divider" style="width: 60px; margin: 15px auto;"></div>
                 </div>
                 <ul class="pricing-features">
-                    <li><span class="check-icon">✓</span> 5 глубоких гипносессий.</li>
-                    <li><span class="check-icon">✓</span> Работа с психотравмами и эмоциональными блоками.</li>
-                    <li><span class="check-icon">✓</span> Регрессивные техники для поиска корневых причин.</li>
-                    <li><span class="check-icon">✓</span> Исцеление зависимостей и саморазрушающих сценариев.</li>
-                    <li><span class="check-icon">✓</span> Формирование новых убеждений и моделей поведения.</li>
-                    <li><span class="check-icon">✓</span> Личное сопровождение и поддержка между сессиями.</li>
+                    <li><span class="check-icon">✓</span> Работа с психотравмами и блоками.</li>
+                    <li><span class="check-icon">✓</span> Регрессивные техники поиска причин.</li>
+                    <li><span class="check-icon">✓</span> Исцеление деструктивных сценариев.</li>
+                    <li><span class="check-icon">✓</span> Формирование новых моделей поведения.</li>
+                    <li><span class="check-icon">✓</span> Личное сопровождение между сессиями.</li>
                     <li><span class="check-icon">✓</span> Обратная связь 24/7.</li>
                 </ul>
-                <div style="background: rgba(212, 175, 55, 0.05); padding: 15px; border-radius: 12px; margin-bottom: 20px; text-align: left; border: 1px solid rgba(212, 175, 55, 0.2);">
+                <div style="background: rgba(212, 175, 55, 0.05); padding: 15px; border-radius: 12px; margin-bottom: 20px; text-align: left; border: 1px solid rgba(212, 175, 55, 0.2); margin-top: auto;">
                     <p style="font-weight: 500; color: var(--accent-gold); margin-bottom: 5px; font-size: 1rem;">Результат:</p>
-                    <p style="font-size: 0.95rem; color: var(--text-main); font-weight: 300;">Глубокие внутренние изменения, освобождение от старых программ и выход на новый уровень жизни.</p>
+                    <p style="font-size: 0.95rem; color: var(--text-main); font-weight: 300;">Глубокие внутренние изменения, освобождение от старых программ и новый уровень жизни.</p>
                 </div>
-                <button class="btn-main" style="background: var(--accent-gold); color:#fff;" onclick="openFormModal()">Выбрать формат</button>
+                <button class="btn-main" style="background: var(--accent-gold); color:#fff;" onclick="openDetailsModal('package2')">Подробнее</button>
             </div>
 
             <!-- Пакет 3 -->
-            <div class="pricing-card neumorphic" style="grid-column: 1 / -1; text-align: left; display: flex; flex-direction: column;">
-                <div style="text-align: center;">
-                    <h3 style="font-size: 2rem; color: var(--text-main);">Полная трансформация жизни</h3>
-                    <p style="color: var(--accent-gold); font-weight: 500; margin-top: 5px; font-size: 1.2rem;">Двухмесячная программа из 10 сессий (1 сессия в неделю)</p>
-                    <p style="color: var(--text-muted); font-weight: 300; margin-top: 15px; font-size: 1rem; max-width: 800px; margin-left: auto; margin-right: auto;">Моя самая глубокая и масштабная программа сопровождения для тех, кто готов выйти на новый уровень жизни, реализовать свой потенциал и освободиться от ограничивающих сценариев прошлого.</p>
-                    <div class="mission-divider" style="width: 100px; margin: 25px auto;"></div>
+            <div class="pricing-card neumorphic" style="border: 1px solid rgba(212, 175, 55, 0.4); box-shadow: 0 10px 25px rgba(212, 175, 55, 0.05);">
+                <div>
+                    <h3 style="font-size: 1.6rem; color: var(--accent-gold);">Полная трансформация</h3>
+                    <p style="color: var(--text-main); font-weight: 500; margin-top: 5px;">Двухмесячная программа (10 сессий)</p>
+                    <p style="color: var(--text-muted); font-weight: 300; margin-top: 10px; font-size: 0.95rem;">Масштабная программа для полного освобождения от ограничивающих сценариев.</p>
+                    <div class="mission-divider" style="width: 60px; margin: 15px auto;"></div>
                 </div>
-
-                <div style="display: flex; flex-wrap: wrap; gap: 30px; justify-content: space-between;">
-                    <div style="flex: 1 1 300px;">
-                        <h4 style="color: var(--accent-gold); margin-bottom: 15px;">В программу входит:</h4>
-                        <ul class="pricing-features" style="margin-top: 0;">
-                            <li><span class="check-icon">✓</span> 10 индивидуальных гипносессий.</li>
-                            <li><span class="check-icon">✓</span> Проработка деструктивных программ подсознания.</li>
-                            <li><span class="check-icon">✓</span> Работа с глубинными страхами, ограничениями и жизненными сценариями.</li>
-                            <li><span class="check-icon">✓</span> Исцеление психотравм и эмоциональных блоков.</li>
-                            <li><span class="check-icon">✓</span> Работа с зависимостями и саморазрушающим поведением.</li>
-                            <li><span class="check-icon">✓</span> Обнаружение своих талантов, сильных сторон и жизненного предназначения.</li>
-                            <li><span class="check-icon">✓</span> Проработка родовых сценариев и ограничивающих установок, передающихся через поколения.</li>
-                            <li><span class="check-icon">✓</span> Выстраивание здоровой родовой иерархии.</li>
-                            <li><span class="check-icon">✓</span> Восстановление связи со своим родом и внутренней опорой на родовую систему.</li>
-                            <li><span class="check-icon">✓</span> Исследование ресурсов рода и интеграция поддерживающих родовых качеств.</li>
-                            <li><span class="check-icon">✓</span> Формирование нового жизненного пути и стратегии реализации.</li>
-                            <li><span class="check-icon">✓</span> Помощь в запуске и реализации своего предназначения.</li>
-                            <li><span class="check-icon">✓</span> Личное сопровождение и обратная связь 24/7 на протяжении всей программы.</li>
-                        </ul>
-                    </div>
-
-                    <div style="flex: 1 1 300px;">
-                        <div style="background: rgba(212, 175, 55, 0.05); padding: 25px; border-radius: 16px; border: 1px solid rgba(212, 175, 55, 0.2); height: 100%;">
-                            <h4 style="color: var(--accent-gold); margin-bottom: 15px;">Результат:</h4>
-                            <ul class="pricing-features" style="margin-top: 0;">
-                                <li><span class="check-icon">✓</span> Освобождение от ограничивающих программ и старых сценариев.</li>
-                                <li><span class="check-icon">✓</span> Глубокая внутренняя трансформация личности.</li>
-                                <li><span class="check-icon">✓</span> Понимание своего предназначения и жизненного пути.</li>
-                                <li><span class="check-icon">✓</span> Восстановление внутренней силы и уверенности.</li>
-                                <li><span class="check-icon">✓</span> Гармонизация отношений с родовой системой.</li>
-                                <li><span class="check-icon">✓</span> Ощущение поддержки рода и опоры внутри себя.</li>
-                                <li><span class="check-icon">✓</span> Переход на качественно новый уровень жизни и самореализации.</li>
-                            </ul>
-                        </div>
-                    </div>
+                <ul class="pricing-features">
+                    <li><span class="check-icon">✓</span> Проработка глубинных страхов и ограничений.</li>
+                    <li><span class="check-icon">✓</span> Поиск предназначения и сильных качеств.</li>
+                    <li><span class="check-icon">✓</span> Проработка негативных родовых сценариев.</li>
+                    <li><span class="check-icon">✓</span> Восстановление внутренней родовой опоры.</li>
+                    <li><span class="check-icon">✓</span> Формирование новой стратегии реализации.</li>
+                    <li><span class="check-icon">✓</span> Личное сопровождение и связь 24/7.</li>
+                </ul>
+                <div style="background: rgba(212, 175, 55, 0.05); padding: 15px; border-radius: 12px; margin-bottom: 20px; text-align: left; border: 1px solid rgba(212, 175, 55, 0.2); margin-top: auto;">
+                    <p style="font-weight: 500; color: var(--accent-gold); margin-bottom: 5px; font-size: 1rem;">Результат:</p>
+                    <p style="font-size: 0.95rem; color: var(--text-main); font-weight: 300;">Перезапись сценария жизни, внутренняя опора, поддержка рода и выход на новый уровень.</p>
                 </div>
-
-                <div style="text-align: center; margin-top: 30px;">
-                    <p style="color: var(--text-main); font-weight: 500; margin-bottom: 20px; font-size: 1.1rem;">Для тех, кто хочет не просто решить отдельную проблему, а полностью переписать сценарий своей жизни.</p>
-                    <button class="btn-main" onclick="openFormModal()" style="padding: 16px 40px; font-size: 1.1rem;">Оставить заявку на полную трансформацию</button>
-                </div>
+                <button class="btn-main" style="background: var(--accent-gold); color:#fff;" onclick="openDetailsModal('package3')">Подробнее</button>
             </div>
             
         </div>
@@ -1651,10 +1702,21 @@
         </div>
     </section>
 
+    <!-- ОСНОВНАЯ ФОРМА ЗАЯВКИ -->
     <div id="formModal" class="form-modal">
         <div class="form-modal-content">
             <span class="form-close" onclick="closeFormModal()">&times;</span>
             <iframe src="https://elizaveta-diginau.fillout.com/t/8rBCrZywF7us" title="Записаться на сеанс"></iframe>
+        </div>
+    </div>
+
+    <!-- ПРЕМИАЛЬНОЕ МОДАЛЬНОЕ ОКНО "ПОДРОБНЕЕ" -->
+    <div id="detailsModal" class="details-modal" onclick="if(event.target === this) closeDetailsModal()">
+        <div class="details-modal-content">
+            <span class="details-close" onclick="closeDetailsModal()">&times;</span>
+            <div id="detailsModalBody">
+                <!-- Контент подгружается через JS -->
+            </div>
         </div>
     </div>
 
@@ -1726,6 +1788,88 @@
         formModal.addEventListener('click', function(e) {
             if (e.target === formModal) closeFormModal();
         });
+
+        /* --- ЛОГИКА НОВОГО МОДАЛЬНОГО ОКНА "ПОДРОБНЕЕ" --- */
+        const detailsData = {
+            package1: {
+                title: "Освобождение",
+                subtitle: "Краткосрочная терапия (2 сессии)",
+                frameText: "Истинная свобода начинается там, где заканчивается необходимость убегать. Мы мягко перепрограммируем ваше подсознание, стирая саму потребность в деструктивных привычках.",
+                blocks: [
+                    { title: "В чем суть формата?", text: "Этот формат создан для тех, кто уже осознал проблему и готов сделать шаг. Мы сфокусировано бьем в корень вашей тяги, обходя сопротивление логического ума." },
+                    { title: "Как это работает?", text: "В состоянии глубокого расслабления мы находим первичный триггер, который запустил механизм зависимости, и нейтрализуем его эмоциональный заряд." }
+                ],
+                tags: ["Детоксикация разума", "Снятие тяги", "Ясность", "Спокойствие"],
+                actionText: "Оставить заявку на этот формат"
+            },
+            package2: {
+                title: "Тотальная трансформация",
+                subtitle: "Месячный курс (5 сессий)",
+                frameText: "Мы не просто убираем симптом. Мы перестраиваем фундамент вашей личности, возвращая вам целостность, внутреннюю силу и непоколебимую уверенность.",
+                blocks: [
+                    { title: "Зачем нужен курс?", text: "Зависимость или глубокий блок редко держатся на одном событии. Это клубок нейронных связей. За 5 сессий мы распутываем его полностью, слой за слоем очищая вашу психику." },
+                    { title: "Что вы получите?", text: "Вы не просто избавитесь от проблемы. Вы проработаете скрытые обиды, детские травмы и ложные убеждения, которые мешали вам жить в полную силу." }
+                ],
+                tags: ["Регрессия", "Исцеление травм", "Внутренняя опора", "Защита от срывов", "Новые сценарии"],
+                actionText: "Оставить заявку на трансформацию"
+            },
+            package3: {
+                title: "Полная трансформация",
+                subtitle: "Двухмесячная программа (10 сессий)",
+                frameText: "Программа-флагман. Здесь мы работаем на уровне души, рода и предназначения. Вы выйдете из этого пути совершенно другим человеком — сильным, свободным и осознанным.",
+                blocks: [
+                    { title: "Для кого этот путь?", text: "Для тех, кто готов кардинально изменить свою жизнь. Кто устал ходить по кругу одних и тех же грабель и хочет не просто решить проблему, а построить жизнь своей мечты." },
+                    { title: "Работа с родом", text: "Часто наши блоки — это не наш опыт, а программы, переданные по роду. Мы очистим эту связь, превратив груз поколений в вашу самую мощную поддержку и опору." },
+                    { title: "Реализация и путь", text: "После очищения мы направим фокус на ваш потенциал: раскроем таланты, уберем страх проявления и создадим вектор для вашей истинной самореализации." }
+                ],
+                tags: ["Родовые программы", "Предназначение", "Абсолютная свобода", "Энергия созидания", "Ментальный щит", "Связь 24/7"],
+                actionText: "Готов к полной трансформации"
+            }
+        };
+
+        function openDetailsModal(packageId) {
+            const data = detailsData[packageId];
+            if (!data) return;
+
+            let blocksHtml = data.blocks.map(b => `
+                <div class="dm-text-block">
+                    <h4>${b.title}</h4>
+                    <p>${b.text}</p>
+                </div>
+            `).join('');
+
+            let tagsHtml = data.tags.map(t => `<div class="dm-tag">${t}</div>`).join('');
+
+            document.getElementById('detailsModalBody').innerHTML = `
+                <h3 class="dm-title">${data.title}</h3>
+                <div class="dm-subtitle">${data.subtitle}</div>
+                
+                <div class="dm-frame">
+                    <p>${data.frameText}</p>
+                </div>
+
+                ${blocksHtml}
+
+                <div class="dm-text-block" style="margin-bottom: 15px;">
+                    <h4>Ключевые этапы проработки:</h4>
+                </div>
+                <div class="dm-list-container">
+                    ${tagsHtml}
+                </div>
+
+                <div style="text-align: center;">
+                    <button class="btn-main" style="background: var(--accent-gold); color: #fff; width: 100%; font-size: 1.1rem; padding: 16px 20px;" onclick="closeDetailsModal(); setTimeout(openFormModal, 300);">${data.actionText}</button>
+                </div>
+            `;
+
+            document.getElementById('detailsModal').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeDetailsModal() {
+            document.getElementById('detailsModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
 
         /* --- ЛОГИКА СЛАЙДЕРА --- */
         let trustSlideIndex = 0;
