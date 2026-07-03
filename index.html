@@ -326,53 +326,94 @@
         .super-promo-block {
             position: relative;
             max-width: 900px; width: 100%;
-            margin: 60px auto 0;
-            padding: 50px 30px;
-            background: linear-gradient(135deg, #D4AF37 0%, #bfa145 100%);
-            border-radius: 30px;
-            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.4), inset 0 0 30px rgba(255,255,255,0.4);
-            overflow: hidden;
+            margin: 90px auto 0;
+            padding: 0px;
             text-align: center;
-            transform-style: preserve-3d;
-            animation: floatPromo 6s ease-in-out infinite alternate;
         }
-        @keyframes floatPromo {
-            0% { transform: translateY(0px); box-shadow: 0 15px 40px rgba(212, 175, 55, 0.4); }
-            100% { transform: translateY(-10px); box-shadow: 0 25px 50px rgba(212, 175, 55, 0.6); }
-        }
-        .super-promo-block::before {
-            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 60%);
-            animation: rotateGlow 10s linear infinite; z-index: 1; pointer-events: none;
-        }
-        @keyframes rotateGlow { 100% { transform: rotate(360deg); } }
-        
-        .sp-3d-element {
-            position: absolute; width: 150px; height: 150px;
-            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.5);
-            border-radius: 20px; top: -20px; right: -20px; transform: rotate(45deg);
-            animation: spin3D 15s linear infinite; z-index: 1; backdrop-filter: blur(5px);
-        }
-        .sp-3d-element::after {
-            content: ''; position: absolute; width: 100px; height: 100px;
-            background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.6);
-            border-radius: 50%; bottom: -30px; left: -30px;
-        }
-        @keyframes spin3D { 100% { transform: rotate(405deg) scale(1.1); } }
-
-        .super-promo-block h3 {
-            font-size: 3rem; color: #fff; font-weight: 700; text-transform: uppercase;
-            position: relative; z-index: 2; margin-bottom: 25px; text-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            letter-spacing: 0.05em;
-        }
+        /* --- ПРЕМИАЛЬНАЯ ЗОЛОТАЯ КНОПКА "ОТЗЫВЫ" (LUXURY UI) --- */
         .btn-glow {
-            display: inline-block; position: relative; z-index: 2;
-            padding: 16px 45px; font-size: 1.2rem; font-family: 'Oswald', sans-serif; font-weight: 600; text-transform: uppercase;
-            color: var(--accent-gold); background: #fff; border: none; border-radius: 50px;
-            cursor: pointer; box-shadow: 0 5px 20px rgba(0,0,0,0.15); transition: all 0.3s;
+            position: relative;
+            z-index: 2;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            isolation: isolate;
+            padding: 27px 110px;
+            min-width: 320px;
+            font-family: 'Oswald', sans-serif;
+            font-weight: 700;
+            font-size: 2.0rem;
+            letter-spacing: 0.30em;
+            text-transform: uppercase;
+            cursor: pointer;
+            border: none;
+            border-radius: 100px;
+            color: #fff6d8;
+            background:
+                radial-gradient(120% 180% at 50% -30%, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0) 45%),
+                linear-gradient(180deg, #4a350c 0%, #8a6416 12%, #e8c15f 30%, #fff2c4 45%, #d7a934 58%, #8a6416 78%, #3c2a08 100%);
+            box-shadow:
+                inset 0 3px 4px rgba(255,255,255,0.65),
+                inset 0 -10px 18px rgba(0,0,0,0.55),
+                inset 0 0 30px rgba(255,215,130,0.25),
+                0 0 0 2px #2a1c05,
+                0 0 0 6px #b8860b,
+                0 0 0 9px rgba(139,101,8,0.45),
+                0 18px 35px rgba(0,0,0,0.5),
+                0 0 45px rgba(212,175,55,0.55);
+            text-shadow:
+                0 1px 0 rgba(255,255,255,0.6),
+                0 -1px 1px rgba(40,25,0,0.9),
+                0 3px 6px rgba(0,0,0,0.55);
+            transition: transform 0.35s ease, box-shadow 0.35s ease;
+            overflow: hidden;
+        }
+        .btn-glow .btn-glow-label {
+            position: relative;
+            z-index: 3;
+        }
+        .btn-glow::before {
+            content: '';
+            position: absolute;
+            top: 5px; left: 7%;
+            width: 86%; height: 42%;
+            background: linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0) 100%);
+            border-radius: 100px 100px 60% 60% / 100px 100px 45% 45%;
+            filter: blur(1px);
+            pointer-events: none;
+            z-index: 1;
+            mix-blend-mode: soft-light;
+        }
+        .btn-glow::after {
+            content: '';
+            position: absolute;
+            top: -60%; left: -60%;
+            width: 45%; height: 220%;
+            background: linear-gradient(120deg, transparent, rgba(255,255,255,0.6), transparent);
+            transform: rotate(20deg);
+            animation: btnGlowSweep 3.2s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 2;
+        }
+        @keyframes btnGlowSweep {
+            0% { left: -60%; }
+            45% { left: 130%; }
+            100% { left: 130%; }
         }
         .btn-glow:hover {
-            transform: scale(1.05) translateY(-3px); box-shadow: 0 10px 30px rgba(255,255,255,0.5);
+            transform: translateY(-4px) scale(1.03);
+            box-shadow:
+                inset 0 3px 4px rgba(255,255,255,0.75),
+                inset 0 -10px 18px rgba(0,0,0,0.55),
+                inset 0 0 35px rgba(255,215,130,0.35),
+                0 0 0 2px #2a1c05,
+                0 0 0 6px #ffd76a,
+                0 0 0 9px rgba(139,101,8,0.55),
+                0 22px 45px rgba(0,0,0,0.55),
+                0 0 60px rgba(212,175,55,0.75);
+        }
+        .btn-glow:active {
+            transform: translateY(-1px) scale(0.99);
         }
 
         /* --- КАРУСЕЛЬ ПЛЕЕРОВ --- */
@@ -508,9 +549,8 @@
             .dm-text-block p { font-size: 0.95rem; }
             .dm-tag { padding: 8px 15px; font-size: 0.85rem; }
 
-            .super-promo-block { padding: 40px 20px; margin-top: 40px;}
-            .super-promo-block h3 { font-size: 2.2rem; }
-            .btn-glow { padding: 14px 30px; font-size: 1.1rem; }
+            .super-promo-block { padding: 10px; margin-top: 40px;}
+            .btn-glow { padding: 20px 40px; min-width: 0; width: 100%; max-width: 340px; font-size: 1.25rem; letter-spacing: 0.18em; }
             .rm-name { font-size: 1.6rem; }
             .rm-photo { width: 110px; height: 110px; }
         }
@@ -782,9 +822,7 @@
         </div>
 
         <div class="super-promo-block">
-            <div class="sp-3d-element"></div>
-            <h3>Мои отзывы</h3>
-            <button class="btn-glow" onclick="openReviewModal(0)">Посмотреть</button>
+            <button class="btn-glow" onclick="openReviewModal(0)"><span class="btn-glow-label">Отзывы</span></button>
         </div>
 
     </section>
