@@ -421,7 +421,7 @@
         }
 
         /* --- MODALS GENERAL --- */
-        .form-modal, .details-modal { display: none; position: fixed; z-index: 3000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(10, 10, 10, 0.7); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); align-items: center; justify-content: center; padding: 20px; }
+        .form-modal, .details-modal { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(10, 10, 10, 0.7); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); align-items: center; justify-content: center; padding: 20px; }
         .form-modal-content { position: relative; width: 95%; max-width: 700px; height: 80vh; border-radius: 20px; overflow: hidden; background: #fff; box-shadow: 0 10px 40px rgba(0,0,0,0.5); animation: zoomIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .form-modal-content iframe { width: 100%; height: 100%; border: none; }
         @keyframes zoomIn { from {transform: scale(0.9); opacity: 0;} to {transform: scale(1); opacity: 1;} }
@@ -701,7 +701,7 @@
                 </ul>
                 <div style="background: rgba(212, 175, 55, 0.05); padding: 15px; border-radius: 12px; margin-bottom: 20px; text-align: left; border: 1px solid rgba(212, 175, 55, 0.2); margin-top: auto;">
                     <p style="font-weight: 500; color: var(--accent-gold); margin-bottom: 5px; font-size: 1rem;">Результат:</p>
-                    <p style="font-size: 0.95rem; color: var(--text-main); font-weight: 300;">Результат: ясное понимание своей ситуации, осознание корневых причин проблемы и конкретный план действий.</p>
+                    <p style="font-size: 0.95rem; color: var(--text-main); font-weight: 300;">Снижение тяги, изменение мышления и переход в продуктивный образ жизни.</p>
                 </div>
                 <button class="btn-main" style="background: var(--accent-gold); color:#fff;" onclick="openDetailsModal('package1')">Подробнее</button>
             </div>
@@ -769,18 +769,18 @@
                     </div>
                 </div>
                 <div class="video-slide">
-                    <h3 class="video-slide-title">Константин, результаты работы</h3>
+                    <h3 class="video-slide-title">Проработка финансового потолка</h3>
                     <div class="video-frame">
                         <div class="youtube-adaptive-container">
-                            <iframe src="https://www.youtube.com/embed/SQHuQM04liw?enablejsapi=1&rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            <iframe src="https://www.youtube.com/embed/UPJeYW-rZXk?enablejsapi=1&rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                         </div>
                     </div>
                 </div>
                 <div class="video-slide">
-                    <h3 class="video-slide-title">Константин, результаты работы</h3>
+                    <h3 class="video-slide-title">Исцеление детских психотравм</h3>
                     <div class="video-frame">
                         <div class="youtube-adaptive-container">
-                            <iframe src="https://www.youtube.com/embed/SQHuQM04liw?enablejsapi=1&rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            <iframe src="https://www.youtube.com/embed/qmBWSvfyvTY?enablejsapi=1&rel=0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                         </div>
                     </div>
                 </div>
@@ -910,8 +910,21 @@
 
         /* --- ЛОГИКА ФОРМЫ --- */
         const formModal = document.getElementById('formModal');
-        function openFormModal() { formModal.style.display = "flex"; document.body.style.overflow = "hidden"; }
-        function closeFormModal() { formModal.style.display = "none"; document.body.style.overflow = "auto"; }
+        let widgetTimeout;
+        
+        function openFormModal() { 
+            formModal.style.display = "flex"; 
+            document.body.style.overflow = "hidden"; 
+            clearTimeout(widgetTimeout);
+            document.getElementById('ai-widget-container').style.display = 'none';
+        }
+        function closeFormModal() { 
+            formModal.style.display = "none"; 
+            document.body.style.overflow = "auto"; 
+            widgetTimeout = setTimeout(() => {
+                document.getElementById('ai-widget-container').style.display = 'block';
+            }, 350);
+        }
 
         /* --- ЛОГИКА ОКНА "ПОДРОБНЕЕ" (Тарифы) --- */
         const detailsData = {
@@ -926,13 +939,19 @@
             let blocksHtml = data.blocks.map(b => `<div class="dm-text-block"><h4>${b.title}</h4><p>${b.text}</p></div>`).join('');
             let tagsHtml = data.tags.map(t => `<div class="dm-tag">${t}</div>`).join('');
             document.getElementById('detailsModalBody').innerHTML = `<h3 class="dm-title">${data.title}</h3><div class="dm-subtitle">${data.subtitle}</div><div class="dm-frame"><p>${data.frameText}</p></div>${blocksHtml}<div class="dm-text-block" style="margin-bottom: 15px;"><h4>Ключевые этапы консультации:</h4></div><div class="dm-list-container">${tagsHtml}</div><div style="text-align: center;"><button class="btn-main" style="background: var(--accent-gold); color: #fff; width: 100%; font-size: 1.1rem; padding: 16px 20px;" onclick="closeDetailsModal(); setTimeout(openFormModal, 300);">${data.actionText}</button></div>`;
+            
             document.getElementById('detailsModal').style.display = 'flex';
             document.body.style.overflow = 'hidden';
+            clearTimeout(widgetTimeout);
+            document.getElementById('ai-widget-container').style.display = 'none';
         }
 
         function closeDetailsModal() {
             document.getElementById('detailsModal').style.display = 'none';
             document.body.style.overflow = 'auto';
+            widgetTimeout = setTimeout(() => {
+                document.getElementById('ai-widget-container').style.display = 'block';
+            }, 350);
         }
 
         /* --- ЛОГИКА СЛАЙДЕРА (Карусель "Почему нам доверяют") --- */
@@ -980,8 +999,7 @@
         }
     </script>
 
-    <!-- Виджет ElevenLabs (добавлен в левый нижний угол) -->
-    <div style="position: fixed; bottom: 20px; left: 20px; z-index: 9999;">
+    <div id="ai-widget-container" style="position: fixed; bottom: 20px; left: 20px; z-index: 9999;">
         <elevenlabs-convai agent-id="agent_8801kwvwpjsvewh8b1t4t7cwfff3"></elevenlabs-convai>
         <script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
     </div>
